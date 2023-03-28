@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 13:33:19 by emmagrevess       #+#    #+#             */
-/*   Updated: 2023/03/15 13:51:11 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/20 13:00:19 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,17 @@ void	ft_printf_env(t_struc *s)
 	int	i;
 
 	i = 0;
+	if (!s->env)
+	{
+		g_output = 1;
+		return ;
+	}
 	while (s->env[i])
 	{
 		printf("%s\n", s->env[i]);
 		i++;
 	}
+	g_output = 0;
 }
 
 int	ft_init_env(t_struc *s, char **env)
@@ -40,4 +46,26 @@ int	ft_init_env(t_struc *s, char **env)
 	s->env[i] = NULL;
 	s->lenght_env = i;
 	return (1);
+}
+
+int	ft_in_env(t_struc *s, char *var)
+{
+	int	i;
+	int check;
+	int size;
+
+	i = 0;
+	check = -1;
+	size = (int) ft_strlen(var);
+	while (s->env[i])
+	{
+		if (ft_strncmp(s->env[i], var , (size_t) (size - 1)) == 0
+			&& (size) == (int) (ft_strrchr((const char*) s->env[i], '=') - s->env[i]))
+		{
+			check = i;
+			break;
+		}
+		i++;
+	}
+	return (check);
 }

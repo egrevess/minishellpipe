@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/16 17:30:14 by emmagrevess       #+#    #+#             */
-/*   Updated: 2023/03/15 12:15:01 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/20 13:18:14 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ int	ft_check_export(char *par, t_struc *s)
 	s->checker_export = 0;
 	while (par[i] && s->checker_export == 0)
 	{
-		if ((par[i] <= '9' && par[i] >= '0')
+		if ((par[i] <= '9' && par[i] >= '0' && i !=0)
 			|| (par[i] <= 'z' && par[i] >= 'a')
 			|| (par[i] <= 'Z' && par[i] >= 'A'))
 			result = 0;
 		else if (i != 0 && par[i] == '+' && par[i + 1] && par[i + 1] == '=')
 			s->checker_export = 1;
-		else if (par[i] == '=')
+		else if (par[i] == '=' && i != 0)
 			break ;
 		else
 		{

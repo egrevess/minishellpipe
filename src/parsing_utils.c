@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/15 13:47:53 by emmagrevess       #+#    #+#             */
-/*   Updated: 2023/03/15 14:20:55 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/20 16:26:23 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,47 @@ int	ft_find_in_env_dollar(t_struc *s, int index)
 	return (check);
 }
 
+void	check_double_quotes(t_struc *s, int index)
+{
+	int i;
+	int	check;
+	int	len;
+	int reps;
+	char **par;
+
+	check = 0;
+	reps = 0;
+	i = 0;
+	len = (int) ft_strlen(s->pars[index]);
+	par = NULL;
+	while(s->pars[index][i] == '\"' )
+	{
+		reps++;
+		i++;
+	}
+	if (s->pars[index][i] != '$')
+		return ;
+	i++;
+	while (s->pars[index][i] && s->pars[index][i] != '\"')
+		i++;
+	while(s->pars[index][i] && s->pars[index][i] == '\"')
+	{
+		check++;
+		i++;
+	}
+	if (check == reps && i == len)
+		par = ft_split(s->pars[index], '\"');
+	else if (check != reps)
+		printf("error : double quote");
+	if (!par)
+		return ;
+	if (ft_len_tab(par) == 1)
+	{
+		s->pars[index] = ft_strdup(par[0]);
+		ft_free_array(par, ft_len_tab(par) - 1);
+	}	
+}
+
 void	ft_sub_dollar(t_struc *s)
 {
 	int index;
@@ -69,6 +110,7 @@ void	ft_sub_dollar(t_struc *s)
 	pass = -1;
 	while (s->pars[index])
 	{
+		check_double_quotes(s, index);
 		if (s->pars[index][0] == '$')
 		{
 			pass = ft_find_in_env_dollar(s,index);

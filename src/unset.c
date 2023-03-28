@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 00:18:14 by emmagrevess       #+#    #+#             */
-/*   Updated: 2023/03/15 12:40:42 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/20 13:21:35 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ int	ft_find_in_env_unset(t_struc *s, int index)
 	size = (int) ft_strlen(s->pars[index]);
 	while (s->env[i])
 	{
-		if (ft_strncmp(s->env[i], s->pars[index], (size_t) size) == 0)
+		if (ft_strncmp(s->env[i], s->pars[index], (size_t) size) == 0
+			&& (size == ((int) (ft_strrchr((const char*) s->env[i], '=') - s->env[i]))))
 		{
 			j = -1;
 			break ;

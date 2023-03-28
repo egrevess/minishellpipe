@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:29:01 by viburton          #+#    #+#             */
-/*   Updated: 2023/03/15 14:18:33 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/28 14:18:32 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,19 @@ int	main(int argc, char **argv, char **env)
 			if (index == 0)
 			{
 				result = ft_init_env(&s,env);
+				s.path = NULL;
 				if (result == 0)
 					exit (EXIT_FAILURE);
 			}
 			ft_sub_dollar(&s);
 			ft_find_pdw(&s);
-			if (p.nb_pipe == 0)
+			if (ft_pipes(&s,&p) == 0 && p.nb_pipe == 0)
 				ft_builtins(&s);
+			printf("nb_pipe = %d\n", p.nb_pipe);
+			/*
 			else 
 				ft_pipes(&s,&p);
+				*/
 			index++;
 			wait(&i);
 		}

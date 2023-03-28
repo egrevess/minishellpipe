@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 18:57:47 by emmagrevess       #+#    #+#             */
-/*   Updated: 2023/03/15 14:14:02 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/16 15:31:34 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@ void	ft_builtins(t_struc *s)
 			ft_exit();
 		else if (ft_strncmp(s->pars[0], "export", (size_t) 6) == 0 && (int) ft_strlen(s->pars[0]) == 6)
 			ft_sort_env(s);
+		else if (ft_strncmp(s->pars[0], "$?", (size_t) 2) == 0)
+			ft_dollar(s);
 		else 
-			ft_execve(s);
+			g_output = ft_execve(s);
 	}
 	else if (s->size_pars > 1)
 	{
@@ -59,6 +61,6 @@ void	ft_builtins(t_struc *s)
 		else if (ft_strncmp(s->pars[0], "exit", (size_t) 4) == 0 && (int) ft_strlen(s->pars[0]) == 4)
 			ft_exit_par(s);
 		else
-			ft_execve(s);
+			g_output = ft_execve(s);
 	}
 }

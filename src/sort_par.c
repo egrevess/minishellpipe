@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 14:45:47 by emmagrevess       #+#    #+#             */
-/*   Updated: 2023/03/14 18:09:24 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/16 15:30:11 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,11 @@ void	ft_sort_env(t_struc *s)
 
 	n = 0;
 	ft_copy_env(s);
-	//if (!s->copy_env)
-		//proteger et free copy_env
+	if (!s->copy_env)
+	{
+		g_output = 1;
+		exit(EXIT_FAILURE);
+	}
 	while (n < s->lenght_env - 1)
 	{
 		i = n + 1;
@@ -95,5 +98,6 @@ void	ft_sort_env(t_struc *s)
 		printf("\"\n");
 		i++;
 	}
+	g_output = 0;
 	ft_free_array(s->copy_env, i - 1);
 }

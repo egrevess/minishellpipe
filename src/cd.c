@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 13:56:20 by emmagrevess       #+#    #+#             */
-/*   Updated: 2023/03/16 13:03:03 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/20 13:00:58 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ void	send_path(char *path, t_struc *s)
 	if (path != NULL && temp != NULL)
 	{
 		if (chdir(path) == 0)
+		{
 			change_value_env(s, temp);
-		else 
+			g_output = 0;
+		}
+		else
+		{
 			printf("minishell: cd: %s: No such file or directory\n", s->pars[1]);
+			g_output = 1;
+		}
 	}
 	else 
 		exit(EXIT_FAILURE);
@@ -63,12 +69,12 @@ void	change_value_env(t_struc *s, char *temp)
 	check = 0;
 	while (s->env[i])
 	{
-		if (ft_strncmp(s->env[i], "PWD" , (size_t) 3) == 0)
+		if (ft_strncmp(s->env[i], "PWD" , (size_t) 3) == 0) // rajouter un check pour la longueur du parametre 
 		{
 			free(s->env[i]);
 			s->env[i] = ft_strjoin("PWD=", ft_find_pdw(s));
 		}
-		else if(ft_strncmp(s->env[i], "OLDPWD" , (size_t) 6) == 0)
+		else if(ft_strncmp(s->env[i], "OLDPWD" , (size_t) 6) == 0) //meme chose ici
 		{
 			free(s->env[i]);
 			s->env[i] = ft_strjoin("OLDPWD=", temp);
@@ -82,8 +88,15 @@ void	change_value_env(t_struc *s, char *temp)
 
 void	ft_cd(t_struc *s)
 {
+	int i;
+	
+	i = -1;
 	if (s->size_pars == 1)
-		send_path(getenv("HOME"), s);
+	{
+		i = ft_in_env(s, "HOME");
+		if (i != -1)
+			send_path(ft_find_in_env(s, i), s);
+	}
 	else if (s->size_pars == 2)
 		send_path(s->pars[1], s);
 }

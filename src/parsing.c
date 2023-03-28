@@ -6,7 +6,7 @@
 /*   By: emmagrevesse <emmagrevesse@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/15 14:29:54 by viburton          #+#    #+#             */
-/*   Updated: 2023/03/08 15:50:50 by emmagrevess      ###   ########.fr       */
+/*   Updated: 2023/03/28 14:15:34 by emmagrevess      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,19 @@ int	check_pipe(t_struc *s, t_pipe *p)
 	int	i;
 
 	i = 0;
-	if (p->nb_pipe == 0)
-		return (0);
-	else 
+	p->nb_pipe = 0;
+	while (s->pars[i])
 	{
-		while(s->pars[i])
-		{
-			if (s->pars[i][0] == '|' && (int) ft_strlen(s->pars[i]) > 1)
-				return(1);
-			i++;
-		}
+		if (s->pars[i][0] == '|' && (int) ft_strlen(s->pars[i]) == 1)
+			p->nb_pipe++;
+		i++;
+	}
+	i = 0;
+	while(s->pars[i])
+	{
+		if (s->pars[i][0] == '|' && (int) ft_strlen(s->pars[i]) > 1)
+			return(1);
+		i++;
 	}
 	return (0);
 }
